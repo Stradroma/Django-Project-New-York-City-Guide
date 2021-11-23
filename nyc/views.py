@@ -1,3 +1,4 @@
+from typing import KeysView
 from django.http import request
 from django.shortcuts import render
 from .boroughs import boroughs
@@ -10,11 +11,11 @@ def borough(request, borough):
     if request.method == 'GET':
         return render(request=request, template_name='borough.html', context={ 'borough': borough, 'activities': boroughs[borough].keys() })
 
-# Create your views here.
+# Create your views here
 def activity(request, borough, activity):
     if request.method == 'GET':
-        return render (request=request, template_name= 'activity.html', context={ 'borough': borough, 'activity': activity, 'venues': boroughs[borough][activity] })
+        return render(request=request, template_name='activity.html', context={'borough': borough, 'activity': activity, 'venues' : boroughs[borough][activity].keys()})
 
-def venue( request, borough, activity, venue):
+def venue(request, borough, activity, venue):
     if request.method == 'GET':
-        return render(request=request, template_name= 'venue.html', context={'borough': borough, 'activiy': activity, 'venue': venue, 'venues':boroughs[borough][2][activity][venue]['description']})
+        return render(request=request, template_name= 'venue.html', context={'borough' : borough, 'activity' : activity, 'venue': venue, 'description' : boroughs[borough][activity][venue].get('description')})
